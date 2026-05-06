@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
-const CURSOR_SIZE = 56
-const CURSOR_SIZE_HOVER = 84
+// Base width in CSS px; hover/click vary via `scale` (Framer animates that cleanly).
+// Halo keeps a fixed wrapper size and varies via scale + opacity.
+const CURSOR_W = 60
+const HALO_W = 92
 
 export default function CursorHalo() {
   const x = useMotionValue(-200)
@@ -95,7 +97,8 @@ export default function CursorHalo() {
 
   if (!enabled || !imgOk) return null
 
-  const size = hovered ? CURSOR_SIZE_HOVER : CURSOR_SIZE
+  // Hover state grows everything to 1.5x; click squishes to 0.85x
+  const targetScale = active ? 0.85 : hovered ? 1.5 : 1
 
   return (
     <motion.div
@@ -105,15 +108,18 @@ export default function CursorHalo() {
     >
       {/* Soft pink halo behind the elephant — adds presence without obscuring content */}
       <motion.div
-        className="absolute rounded-full bg-brand-pink/15 blur-md"
-        animate={{
-          width: size + 28,
-          height: size + 28,
-          x: -(size + 28) / 2,
-          y: -(size + 28) / 2,
-          opacity: hovered ? 0.9 : 0.55,
+        className="absolute left-0 top-0 rounded-full bg-brand-pink/20 blur-md"
+        style={{
+          width: HALO_W,
+          height: HALO_W,
+          x: -HALO_W / 2,
+          y: -HALO_W / 2,
         }}
-        transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+        animate={{
+          scale: targetScale,
+          opacity: hovered ? 0.85 : 0.5,
+        }}
+        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
       />
 
       {/* Elephant icon — slight lean on hover, squish on click */}
@@ -122,16 +128,18 @@ export default function CursorHalo() {
         alt=""
         draggable={false}
         onError={() => setImgOk(false)}
-        className="absolute select-none drop-shadow-[0_4px_10px_rgba(242,119,138,0.45)]"
-        animate={{
-          width: size,
+        className="absolute left-0 top-0 max-w-none select-none drop-shadow-[0_4px_10px_rgba(242,119,138,0.45)]"
+        style={{
+          width: CURSOR_W,
           height: 'auto',
-          x: -size / 2,
-          y: -size / 2,
-          rotate: hovered ? -8 : 0,
-          scale: active ? 0.85 : 1,
+          x: -CURSOR_W / 2,
+          y: -CURSOR_W / 2,
         }}
-        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        animate={{
+          scale: targetScale,
+          rotate: hovered ? -8 : 0,
+        }}
+        transition={{ type: 'spring', stiffness: 240, damping: 22 }}
       />
     </motion.div>
   )
