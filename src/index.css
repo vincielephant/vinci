@@ -129,7 +129,15 @@ body {
   }
 }
 
-/* Hide custom cursor on touch devices */
+/* Custom elephant cursor — only on devices with a real pointer */
+@media (pointer: fine) {
+  html.elephant-cursor,
+  html.elephant-cursor body,
+  html.elephant-cursor * {
+    cursor: none !important;
+  }
+}
+
 @media (pointer: coarse) {
   .cursor-halo {
     display: none !important;
