@@ -43,7 +43,7 @@ export default function ContactForm() {
       <BgPattern variant="mesh" className="opacity-70" />
 
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="grid items-stretch gap-10 md:grid-cols-2 md:gap-16">
+        <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Pitch column */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
@@ -56,7 +56,7 @@ export default function ContactForm() {
               <span className="h-2 w-2 rounded-full bg-brand-pink" />
               צרו קשר
             </div>
-            <h2 className="font-display text-4xl font-bold leading-tight text-brand-ink md:text-5xl lg:text-6xl">
+            <h2 className="font-display text-3xl font-bold leading-tight text-brand-ink sm:text-4xl md:text-5xl lg:text-6xl">
               בואו נדבר על
               <br />
               <span className="text-brand-pink">הצוות שלכם</span>.
@@ -90,7 +90,7 @@ export default function ContactForm() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="pointer-events-none mt-10 hidden md:block"
+              className="pointer-events-none mt-10 hidden lg:block"
               aria-hidden
             >
               <motion.img

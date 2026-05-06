@@ -77,9 +77,9 @@ export default function Testimonials() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 30, scale: 0.98 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="relative rounded-3xl border border-brand-ink/5 bg-white p-8 shadow-card md:p-12"
+                className="relative rounded-3xl border border-brand-ink/5 bg-white p-6 shadow-card sm:p-8 md:p-12"
               >
-                <blockquote className="font-display text-2xl font-medium leading-snug text-brand-ink md:text-3xl">
+                <blockquote className="font-display text-xl font-medium leading-snug text-brand-ink sm:text-2xl md:text-3xl">
                   "{QUOTES[active].quote}"
                 </blockquote>
                 <figcaption className="mt-8 flex items-center gap-4 border-t border-brand-ink/5 pt-6">

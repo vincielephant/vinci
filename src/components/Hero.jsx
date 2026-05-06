@@ -26,7 +26,7 @@ export default function Hero() {
     <section
       ref={ref}
       id="top"
-      className="relative isolate overflow-hidden pb-20 pt-28 md:pb-32 md:pt-36"
+      className="relative isolate overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-32 lg:pt-36"
     >
       <BgPattern variant="flow" className="opacity-90" />
       <BgPattern
@@ -34,7 +34,7 @@ export default function Hero() {
         className="opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]"
       />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:gap-16 md:px-8">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 md:gap-14 md:px-8 lg:grid-cols-2 lg:gap-16">
         {/* Text column (RTL — right side visually) */}
         <motion.div
           style={{ y: textY, opacity: textOpacity }}
@@ -50,7 +50,7 @@ export default function Hero() {
             פלטפורמת מיינדסט למחלקות HR
           </motion.div>
 
-          <h1 className="font-display text-[2.4rem] font-bold leading-[1.05] tracking-tight text-brand-ink sm:text-[3rem] md:text-[3.6rem] lg:text-[4.4rem]">
+          <h1 className="font-display text-[2.25rem] font-bold leading-[1.05] tracking-tight text-brand-ink sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.6rem] xl:text-[4.4rem]">
             {TITLE_WORDS.map((word, i) => {
               const isHighlight = word === 'צמיחה'
               return (
@@ -120,14 +120,14 @@ export default function Hero() {
           >
             <a
               href="#contact"
-              className="shimmer group inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink px-7 py-4 text-base font-semibold text-white shadow-button transition-transform hover:-translate-y-0.5"
+              className="shimmer group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-brand-pink px-6 py-3.5 text-sm font-semibold text-white shadow-button transition-transform hover:-translate-y-0.5 sm:px-7 sm:py-4 sm:text-base"
             >
               תאמו שיחת ייעוץ אישית
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             </a>
             <a
               href="#how"
-              className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-ink/15 bg-white px-7 py-4 text-base font-semibold text-brand-ink transition-all hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+              className="group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 border-brand-ink/15 bg-white px-6 py-3.5 text-sm font-semibold text-brand-ink transition-all hover:border-brand-ink hover:bg-brand-ink hover:text-white sm:px-7 sm:py-4 sm:text-base"
             >
               <PlayCircle className="h-5 w-5 text-brand-pink transition-colors group-hover:text-white" />
               צפו בסילבוס המלא
@@ -139,7 +139,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.6 }}
-            className="mt-10 flex items-center gap-5 text-sm text-brand-inkSoft"
+            className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-brand-inkSoft md:mt-10 md:gap-5"
           >
             <div className="flex -space-x-2 -space-x-reverse">
               {[0, 1, 2, 3].map((i) => (
@@ -198,7 +198,7 @@ function CharacterBlob() {
   const reduce = useReducedMotion()
 
   return (
-    <div className="relative h-[420px] w-[420px] sm:h-[480px] sm:w-[480px] md:h-[560px] md:w-[560px]">
+    <div className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px]">
       {/* Morphing pink halo */}
       <motion.div
         className="absolute inset-6 bg-gradient-to-br from-brand-pink/45 via-brand-pinkSoft to-brand-pinkSoft/30 shadow-soft animate-morph"
@@ -247,7 +247,7 @@ function CharacterBlob() {
           y: 0,
         }}
         transition={{ delay: 1.4, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-        className="absolute -top-2 right-2 z-20 md:right-0"
+        className="absolute top-4 right-0 z-20 sm:top-2 sm:right-2 md:right-0"
       >
         <motion.div
           animate={
@@ -273,7 +273,7 @@ function CharacterBlob() {
         initial={{ opacity: 0, scale: 0.6, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ delay: 1.7, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-        className="absolute -bottom-2 -left-2 z-20 md:-left-6"
+        className="absolute bottom-4 left-0 z-20 sm:bottom-2 sm:left-2 md:-left-6"
       >
         <motion.div
           animate={

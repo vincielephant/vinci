@@ -93,18 +93,29 @@ export default function HowItWorks() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Track */}
+          {/* Horizontal track (lg+) */}
           <div
-            className="absolute right-6 top-8 hidden h-[2px] w-[calc(100%-3rem)] bg-brand-ink/10 md:block"
+            className="absolute right-6 top-8 hidden h-[2px] w-[calc(100%-3rem)] bg-brand-ink/10 lg:block"
             aria-hidden
           />
           <motion.div
-            className="absolute right-6 top-8 hidden h-[3px] origin-right rounded-full bg-gradient-to-l from-brand-pink to-brand-pinkDeep md:block"
+            className="absolute right-6 top-8 hidden h-[3px] origin-right rounded-full bg-gradient-to-l from-brand-pink to-brand-pinkDeep lg:block"
             style={{ scaleX: lineProgress, width: 'calc(100% - 3rem)' }}
             aria-hidden
           />
 
-          <ol className="grid gap-8 md:grid-cols-4 md:gap-6">
+          {/* Vertical track (mobile only — connects step 1→2→3→4) */}
+          <div
+            className="absolute right-8 top-12 bottom-12 w-[2px] bg-brand-ink/10 sm:hidden"
+            aria-hidden
+          />
+          <motion.div
+            className="absolute right-8 top-12 w-[3px] origin-top rounded-full bg-gradient-to-b from-brand-pink to-brand-pinkDeep sm:hidden"
+            style={{ scaleY: lineProgress, height: 'calc(100% - 6rem)' }}
+            aria-hidden
+          />
+
+          <ol className="grid gap-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-6">
             {STEPS.map((step, i) => (
               <Step key={step.n} {...step} index={i} />
             ))}

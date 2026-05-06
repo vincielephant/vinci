@@ -44,12 +44,11 @@ export default function ROICalculator() {
             <Calculator className="h-3.5 w-3.5" />
             ROI of Happiness™
           </div>
-          <h2 className="font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+          <h2 className="font-display text-3xl font-bold leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl">
             כמה <span className="text-brand-pink">באמת</span> שווה לך
-            <br />
-            צוות שמרגיש טוב?
+            <br className="hidden sm:block" /> צוות שמרגיש טוב?
           </h2>
-          <p className="mt-5 max-w-2xl text-lg text-white/70 md:text-xl">
+          <p className="mt-4 max-w-2xl text-base text-white/70 sm:mt-5 sm:text-lg md:text-xl">
             הזיזו את הסליידרים — נראה לכם בזמן אמת מה התוצאה הצפויה אחרי 90 יום
             של עבודה משותפת.
           </p>
@@ -62,7 +61,7 @@ export default function ROICalculator() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-15%' }}
             transition={{ duration: 0.7 }}
-            className="relative rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl md:p-9 lg:col-span-5"
+            className="relative rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl sm:p-7 md:p-9 lg:col-span-5"
           >
             <SliderRow
               label="כמות עובדים בארגון"
@@ -216,7 +215,7 @@ function Whiteboard({ result }) {
   ]
 
   return (
-    <div className="relative h-full rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-transparent p-7 backdrop-blur-xl md:p-9">
+    <div className="relative h-full rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-transparent p-6 backdrop-blur-xl sm:rounded-[2rem] sm:p-7 md:p-9">
       <div className="absolute inset-x-12 -top-3 h-3 rounded-t-xl bg-white/10" />
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white/40">

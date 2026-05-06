@@ -26,10 +26,10 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-brand-ink text-white/80">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-brand-pink to-transparent" />
-      <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-        <div className="grid gap-12 md:grid-cols-12">
+      <div className="mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-16">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-12">
           {/* Brand */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-12 lg:col-span-4">
             <motion.img
               src="/logo.svg"
               alt="Vinci"
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
 
           {/* Columns */}
-          <div className="grid gap-8 md:col-span-8 md:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-3 md:col-span-12 lg:col-span-8">
             {COLS.map((col) => (
               <div key={col.title}>
                 <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-white/40">

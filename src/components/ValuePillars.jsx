@@ -66,7 +66,7 @@ export default function ValuePillars() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {PILLARS.map((p, i) => (
             <PillarCard key={p.title} {...p} index={i} />
           ))}
@@ -134,7 +134,9 @@ function PillarCard({ icon: Icon, title, body, accent, index }) {
         rotateY: reduce ? 0 : ry,
         transformPerspective: 1000,
       }}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-brand-ink/5 bg-white p-7 shadow-card transition-shadow hover:shadow-soft md:p-8"
+      className={`group relative flex flex-col overflow-hidden rounded-3xl border border-brand-ink/5 bg-white p-6 shadow-card transition-shadow hover:shadow-soft sm:p-7 md:p-8 ${
+        index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''
+      }`}
       data-cursor="hover"
     >
       {/* corner glow */}
