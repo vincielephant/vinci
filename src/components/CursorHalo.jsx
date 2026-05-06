@@ -10,21 +10,31 @@ export default function CursorHalo() {
   const [hovered, setHovered] = useState(false)
   const [active, setActive] = useState(false)
   const [enabled, setEnabled] = useState(false)
+  const [imgOk, setImgOk] = useState(true)
 
-  // Slightly stiffer springs so the elephant tracks tightly without feeling laggy
-  const sx = useSpring(x, { stiffness: 320, damping: 28, mass: 0.45 })
-  const sy = useSpring(y, { stiffness: 320, damping: 28, mass: 0.45 })
+  // Stiff springs so the elephant snaps to the cursor without lag.
+  const sx = useSpring(x, { stiffness: 380, damping: 30, mass: 0.4 })
+  const sy = useSpring(y, { stiffness: 380, damping: 30, mass: 0.4 })
 
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (window.matchMedia('(pointer: coarse)').matches) return
+
     setEnabled(true)
-    document.documentElement.classList.add('elephant-cursor')
+    let firstMove = true
+
+    const showCustom = () => document.documentElement.classList.add('elephant-cursor')
+    const hideCustom = () => document.documentElement.classList.remove('elephant-cursor')
 
     const move = (e) => {
       x.set(e.clientX)
       y.set(e.clientY)
+      if (firstMove) {
+        firstMove = false
+        showCustom()
+      }
     }
+
     const enter = (e) => {
       const t = e.target
       if (
@@ -47,28 +57,43 @@ export default function CursorHalo() {
         setHovered(false)
       }
     }
+
     const down = () => setActive(true)
     const up = () => setActive(false)
-    const out = () => x.set(-200)
+
+    // When mouse leaves the window, restore native cursor + park the elephant
+    const docLeave = () => {
+      hideCustom()
+      x.set(-200)
+      y.set(-200)
+      firstMove = true
+    }
+    // On re-entry, take the next mousemove as "first move" again
+    const docEnter = () => {
+      firstMove = true
+    }
 
     window.addEventListener('mousemove', move)
     document.addEventListener('mouseover', enter, true)
     document.addEventListener('mouseout', leave, true)
     window.addEventListener('mousedown', down)
     window.addEventListener('mouseup', up)
-    document.addEventListener('mouseleave', out)
+    document.addEventListener('mouseleave', docLeave)
+    document.addEventListener('mouseenter', docEnter)
+
     return () => {
       window.removeEventListener('mousemove', move)
       document.removeEventListener('mouseover', enter, true)
       document.removeEventListener('mouseout', leave, true)
       window.removeEventListener('mousedown', down)
       window.removeEventListener('mouseup', up)
-      document.removeEventListener('mouseleave', out)
-      document.documentElement.classList.remove('elephant-cursor')
+      document.removeEventListener('mouseleave', docLeave)
+      document.removeEventListener('mouseenter', docEnter)
+      hideCustom()
     }
   }, [x, y])
 
-  if (!enabled) return null
+  if (!enabled || !imgOk) return null
 
   const size = hovered ? CURSOR_SIZE_HOVER : CURSOR_SIZE
 
@@ -78,7 +103,7 @@ export default function CursorHalo() {
       className="cursor-halo pointer-events-none fixed top-0 left-0 z-[90]"
       style={{ x: sx, y: sy }}
     >
-      {/* Soft pink halo behind the elephant — gives presence without obscuring content */}
+      {/* Soft pink halo behind the elephant — adds presence without obscuring content */}
       <motion.div
         className="absolute rounded-full bg-brand-pink/15 blur-md"
         animate={{
@@ -91,11 +116,12 @@ export default function CursorHalo() {
         transition={{ type: 'spring', stiffness: 280, damping: 24 }}
       />
 
-      {/* Elephant icon — slight bob + lean on hover, squish on click */}
+      {/* Elephant icon — slight lean on hover, squish on click */}
       <motion.img
         src="/cursor.png"
         alt=""
         draggable={false}
+        onError={() => setImgOk(false)}
         className="absolute select-none drop-shadow-[0_4px_10px_rgba(242,119,138,0.45)]"
         animate={{
           width: size,
