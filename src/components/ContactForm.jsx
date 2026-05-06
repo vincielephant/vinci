@@ -84,21 +84,26 @@ export default function ContactForm() {
               ))}
             </ul>
 
-            {/* Peeking character */}
+            {/* Peeking character — anchored to the bottom of the column */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="pointer-events-none mt-10 hidden lg:block"
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+              className="pointer-events-none relative mt-12 hidden lg:block"
               aria-hidden
             >
+              {/* Soft halo behind peeking elephant */}
+              <div
+                className="absolute -inset-2 rounded-blob bg-brand-pinkSoft/80 blur-[2px]"
+                aria-hidden
+              />
               <motion.img
                 src="/character/peeking.png"
                 alt=""
-                className="h-40 w-auto object-contain xl:h-48"
-                animate={{ y: [0, -8, 0], rotate: [-1, 2, -1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative h-56 w-auto select-none object-contain drop-shadow-2xl xl:h-64"
+                animate={{ y: [0, -6, 0], rotate: [-1, 1.5, -1] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
                 onError={(e) => (e.currentTarget.style.opacity = '0')}
               />
             </motion.div>

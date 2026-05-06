@@ -1,9 +1,11 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   motion,
   useScroll,
   useTransform,
   useReducedMotion,
+  useMotionValue,
+  useSpring,
 } from 'framer-motion'
 import { ArrowLeft, PlayCircle, Sparkles } from 'lucide-react'
 import BgPattern from './BgPattern'
@@ -196,32 +198,98 @@ export default function Hero() {
 
 function CharacterBlob() {
   const reduce = useReducedMotion()
+  const wrapRef = useRef(null)
+  const [isCoarse, setIsCoarse] = useState(false)
+
+  // Pointer tracking — values are in -0.5..0.5 range, normalized to viewport
+  const px = useMotionValue(0)
+  const py = useMotionValue(0)
+
+  // Spring-smoothed values fed into transforms
+  const springConfig = { stiffness: 110, damping: 18, mass: 0.7 }
+  const sx = useSpring(px, springConfig)
+  const sy = useSpring(py, springConfig)
+
+  // Character tilt: ±14° on Y, ±10° on X — feels alive without breaking depth
+  const rotateY = useTransform(sx, [-0.5, 0.5], [-14, 14])
+  const rotateX = useTransform(sy, [-0.5, 0.5], [10, -10])
+  // Tiny lateral drift so the character "leans" toward cursor
+  const driftX = useTransform(sx, [-0.5, 0.5], [-12, 12])
+  const driftY = useTransform(sy, [-0.5, 0.5], [-8, 8])
+  // Halo follows with a softer offset
+  const haloX = useTransform(sx, [-0.5, 0.5], [-18, 18])
+  const haloY = useTransform(sy, [-0.5, 0.5], [-12, 12])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mq = window.matchMedia('(pointer: coarse)')
+    setIsCoarse(mq.matches)
+    const onChange = (e) => setIsCoarse(e.matches)
+    mq.addEventListener?.('change', onChange)
+    return () => mq.removeEventListener?.('change', onChange)
+  }, [])
+
+  useEffect(() => {
+    if (reduce || isCoarse) return
+    const handle = (e) => {
+      // Normalize to -0.5..0.5 across viewport (cursor at center => 0)
+      px.set(e.clientX / window.innerWidth - 0.5)
+      py.set(e.clientY / window.innerHeight - 0.5)
+    }
+    const reset = () => {
+      px.set(0)
+      py.set(0)
+    }
+    window.addEventListener('mousemove', handle, { passive: true })
+    window.addEventListener('mouseleave', reset)
+    return () => {
+      window.removeEventListener('mousemove', handle)
+      window.removeEventListener('mouseleave', reset)
+    }
+  }, [px, py, reduce, isCoarse])
 
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px]">
-      {/* Morphing pink halo */}
+    <motion.div
+      ref={wrapRef}
+      className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px]"
+      style={{
+        rotateX: reduce || isCoarse ? 0 : rotateX,
+        rotateY: reduce || isCoarse ? 0 : rotateY,
+        transformPerspective: 1100,
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Morphing pink halo (drifts softly with the cursor) */}
       <motion.div
         className="absolute inset-6 bg-gradient-to-br from-brand-pink/45 via-brand-pinkSoft to-brand-pinkSoft/30 shadow-soft animate-morph"
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          x: reduce || isCoarse ? 0 : haloX,
+          y: reduce || isCoarse ? 0 : haloY,
+        }}
       />
 
       {/* Radial pattern behind character */}
       <BgPattern variant="radial" className="opacity-60" />
 
-      {/* Character image — replace /character/hero-peace.png with your asset */}
+      {/* Character image — drifts toward cursor with springs */}
       <motion.img
         src="/character/hero-peace.png"
         alt="The Pink Catalyst — דמות המותג של Vinci"
         className="relative z-10 mx-auto h-full w-full select-none object-contain"
         draggable={false}
+        style={{
+          x: reduce || isCoarse ? 0 : driftX,
+          y: reduce || isCoarse ? 0 : driftY,
+        }}
         initial={
           reduce
             ? { opacity: 0 }
-            : { x: -120, opacity: 0, rotate: -15, scale: 0.9 }
+            : { opacity: 0, rotate: -15, scale: 0.9 }
         }
-        animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
+        animate={{ opacity: 1, rotate: 0, scale: 1 }}
         transition={{
           delay: 0.5,
           duration: 1,
@@ -293,6 +361,6 @@ function CharacterBlob() {
           </div>
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }

@@ -66,7 +66,7 @@ export default function Nav() {
         {/* CTA */}
         <a
           href="#contact"
-          className="hidden items-center gap-2 rounded-full bg-brand-ink px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-all hover:bg-brand-pink hover:shadow-button md:inline-flex"
+          className="shimmer hidden items-center gap-2 whitespace-nowrap rounded-full bg-brand-pink px-5 py-2.5 text-sm font-semibold text-white shadow-button transition-transform hover:-translate-y-0.5 md:inline-flex"
         >
           תאמו שיחה
         </a>

@@ -56,31 +56,45 @@ export default function FinalCTA() {
               whileInView={{ opacity: 1, x: 0, rotate: 0 }}
               viewport={{ once: true, margin: '-15%' }}
               transition={{ duration: 0.9, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
-              className="relative flex h-56 items-center justify-center sm:h-72 md:h-80 lg:h-96"
+              className="relative flex h-64 items-center justify-center sm:h-80 md:h-[22rem] lg:h-[26rem]"
               aria-hidden
             >
+              {/* Radial glow behind character */}
+              <div
+                className="absolute inset-0 rounded-full bg-white/15 blur-3xl"
+                style={{
+                  maskImage: 'radial-gradient(circle at center, black 40%, transparent 70%)',
+                }}
+                aria-hidden
+              />
               <motion.img
                 src="/character/hoodie.png"
                 alt=""
-                className="h-full w-auto select-none object-contain drop-shadow-2xl [transform:scaleX(-1)]"
+                className="relative h-full w-auto select-none object-contain drop-shadow-2xl [transform:scaleX(-1)]"
                 draggable={false}
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -12, 0], rotate: [-1, 2, -1] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                 onError={(e) => (e.currentTarget.style.opacity = '0')}
               />
               {/* Sparkles */}
               {[
-                { top: '10%', left: '20%', d: 0 },
-                { top: '40%', left: '80%', d: 0.6 },
-                { top: '70%', left: '15%', d: 1.2 },
+                { top: '8%', left: '18%', d: 0, size: 10 },
+                { top: '38%', left: '82%', d: 0.6, size: 8 },
+                { top: '70%', left: '12%', d: 1.2, size: 12 },
+                { top: '22%', left: '70%', d: 1.8, size: 6 },
               ].map((s, i) => (
                 <motion.div
                   key={i}
-                  className="absolute h-2 w-2 rounded-full bg-white"
-                  style={{ top: s.top, left: s.left }}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    top: s.top,
+                    left: s.left,
+                    width: `${s.size}px`,
+                    height: `${s.size}px`,
+                  }}
                   animate={{ scale: [0, 1.4, 0], opacity: [0, 1, 0] }}
                   transition={{
-                    duration: 2,
+                    duration: 2.4,
                     repeat: Infinity,
                     delay: s.d,
                     ease: 'easeInOut',

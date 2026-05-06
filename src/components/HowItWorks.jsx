@@ -74,20 +74,35 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative hidden items-end gap-3 md:flex"
+            className="relative hidden items-end gap-3 md:flex md:gap-4"
             aria-hidden
           >
-            <div className="rounded-2xl rounded-bl-sm bg-brand-ink px-4 py-3 text-sm font-semibold text-white shadow-card">
+            <motion.div
+              animate={{ y: [0, -3, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+              className="relative mb-4 rounded-2xl rounded-bl-sm bg-brand-ink px-5 py-3 text-sm font-semibold text-white shadow-card"
+            >
               בואו נתחיל ✨
+              <span
+                className="absolute -bottom-2 left-3 h-3 w-3 rotate-45 bg-brand-ink"
+                aria-hidden
+              />
+            </motion.div>
+            <div className="relative">
+              {/* Soft halo behind hoodie */}
+              <div
+                className="absolute inset-3 rounded-blob bg-brand-pinkSoft/70 blur-[3px]"
+                aria-hidden
+              />
+              <motion.img
+                src="/character/hoodie.png"
+                alt=""
+                className="relative h-44 w-auto select-none object-contain drop-shadow-xl md:h-48 lg:h-56 xl:h-64"
+                animate={{ y: [0, -8, 0], rotate: [-1.5, 2.5, -1.5] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                onError={(e) => (e.currentTarget.style.opacity = '0')}
+              />
             </div>
-            <motion.img
-              src="/character/hoodie.png"
-              alt=""
-              className="h-32 w-auto object-contain xl:h-40"
-              animate={{ y: [0, -6, 0], rotate: [-1, 2, -1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              onError={(e) => (e.currentTarget.style.opacity = '0')}
-            />
           </motion.div>
         </motion.div>
 

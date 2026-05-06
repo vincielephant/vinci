@@ -48,9 +48,9 @@ export default function ValuePillars() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-15%' }}
           transition={{ duration: 0.6 }}
-          className="mb-12 flex flex-col items-start gap-6 md:mb-16 md:flex-row md:items-end md:justify-between"
+          className="mb-12 grid gap-6 md:mb-16 md:grid-cols-12 md:gap-10 md:items-end"
         >
-          <div className="max-w-2xl">
+          <div className="md:col-span-7 lg:col-span-6">
             <Eyebrow>מה תקבלו?</Eyebrow>
             <h2 className="font-display text-4xl font-bold leading-tight text-brand-ink md:text-5xl">
               שלוש סיבות שמחלקות HR{' '}
@@ -60,7 +60,30 @@ export default function ValuePillars() {
               </span>
             </h2>
           </div>
-          <p className="max-w-md text-lg text-brand-inkSoft">
+
+          {/* Pointing character — visually leans toward the title */}
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0, x: -30, rotate: -6 }}
+            whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            viewport={{ once: true, margin: '-15%' }}
+            transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
+            className="relative -order-1 mx-auto h-44 w-44 sm:h-56 sm:w-56 md:order-none md:col-span-2 md:mx-0 md:h-40 md:w-40 lg:col-span-2 lg:h-52 lg:w-52 xl:h-60 xl:w-60"
+          >
+            {/* Soft halo behind */}
+            <div className="absolute inset-2 rounded-blob bg-brand-pinkSoft/70 blur-[2px]" aria-hidden />
+            <motion.img
+              src="/character/pointing.png"
+              alt=""
+              className="relative h-full w-full select-none object-contain drop-shadow-xl"
+              draggable={false}
+              animate={{ y: [0, -8, 0], rotate: [-2, 3, -2] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              onError={(e) => (e.currentTarget.style.opacity = '0')}
+            />
+          </motion.div>
+
+          <p className="max-w-md text-lg text-brand-inkSoft md:col-span-3 lg:col-span-4">
             אנחנו לא מספרים סיפורים — אנחנו בונים תרבות שמבוססת על נתונים,
             התמדה וכלים שצוותים יכולים להפעיל ביום־יום.
           </p>
@@ -73,24 +96,6 @@ export default function ValuePillars() {
         </div>
       </div>
 
-      {/* Pointing character — visual cue toward the cards */}
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0, x: -40, rotate: -8 }}
-        whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-        viewport={{ once: true, margin: '-20%' }}
-        transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1], delay: 0.2 }}
-        className="absolute bottom-6 -left-10 hidden h-44 w-44 lg:block xl:-left-4 xl:h-56 xl:w-56"
-      >
-        <motion.img
-          src="/character/pointing.png"
-          alt=""
-          className="h-full w-full object-contain"
-          animate={{ x: [-4, 4, -4] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          onError={(e) => (e.currentTarget.style.opacity = '0')}
-        />
-      </motion.div>
     </section>
   )
 }

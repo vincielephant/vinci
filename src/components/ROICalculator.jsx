@@ -119,21 +119,26 @@ export default function ROICalculator() {
           <div className="relative lg:col-span-7">
             <Whiteboard result={result} />
 
-            {/* Professor character */}
+            {/* Professor character — perched on the whiteboard's top-left edge */}
             <motion.div
-              initial={{ opacity: 0, x: -50, rotate: -10 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+              initial={{ opacity: 0, x: -60, y: -20, rotate: -12 }}
+              whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
               viewport={{ once: true, margin: '-15%' }}
-              transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1], delay: 0.3 }}
-              className="pointer-events-none absolute -bottom-6 -left-6 hidden h-44 w-44 md:block lg:-bottom-10 lg:-left-10 lg:h-56 lg:w-56"
+              transition={{ duration: 0.9, ease: [0.34, 1.56, 0.64, 1], delay: 0.35 }}
+              className="pointer-events-none absolute -top-16 -left-8 hidden h-56 w-56 md:block lg:-top-24 lg:-left-12 lg:h-72 lg:w-72 xl:h-80 xl:w-80"
               aria-hidden
             >
+              {/* Glow halo behind */}
+              <div
+                className="absolute inset-6 rounded-full bg-brand-pink/30 blur-3xl"
+                aria-hidden
+              />
               <motion.img
                 src="/character/professor.png"
                 alt=""
-                className="h-full w-full object-contain drop-shadow-2xl"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative h-full w-full select-none object-contain drop-shadow-2xl"
+                animate={{ y: [0, -10, 0], rotate: [-1, 2, -1] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                 onError={(e) => (e.currentTarget.style.opacity = '0')}
               />
             </motion.div>
