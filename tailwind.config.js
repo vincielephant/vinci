@@ -48,7 +48,7 @@ export default {
         },
         marquee: {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(50%)' },
+          '100%': { transform: 'translateX(-33.3333%)' },
         },
       },
       animation: {
@@ -56,7 +56,7 @@ export default {
         floatSlow: 'floatSlow 6s ease-in-out infinite',
         morph: 'morph 12s ease-in-out infinite',
         shimmer: 'shimmer 3s linear infinite',
-        marquee: 'marquee 40s linear infinite',
+        marquee: 'marquee 30s linear infinite',
       },
       backgroundImage: {
         'shimmer-gradient':

@@ -12,8 +12,8 @@ const COMPANIES = [
 ]
 
 export default function TrustStrip() {
-  // Duplicated array for seamless marquee
-  const list = [...COMPANIES, ...COMPANIES]
+  // Tripled for seamless marquee — keyframe translates by exactly one copy width (-33.333%)
+  const list = [...COMPANIES, ...COMPANIES, ...COMPANIES]
 
   return (
     <section
